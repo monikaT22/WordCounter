@@ -28,7 +28,7 @@ public class WordCounterControllerTest {
     private WordCounterController wordCountController;
 
     @Mock
-    private WordCounterService wordCounterService;       
+    private WordCounterService wordCounterService;         
 
     BindingResult bindingResult = mock(BindingResult.class);
     Word word = new Word(); 

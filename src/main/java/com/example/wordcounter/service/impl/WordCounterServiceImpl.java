@@ -20,7 +20,7 @@ public class WordCounterServiceImpl implements WordCounterService{
     @Autowired
     private TranslatorService translatorService;
 
-    private Map<String,AtomicInteger> wordMap = Collections.synchronizedMap(new HashMap<>());
+    public Map<String,AtomicInteger> wordMap = Collections.synchronizedMap(new HashMap<>());
 
     @Override
     public void addWords(List<String> words) { 
