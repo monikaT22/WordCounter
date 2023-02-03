@@ -3,6 +3,7 @@ package com.example.wordcounter.constants;
 public class WordCounterConstants {
 
     public static final String WORD_LIST_EMPTY_OR_NULL= "Word list is empty/null";
+    public static final String INVALID_WORD = "Non alphabetic words are not allowed";
     public static final String WORDS_ADDED_SUCCESSFULLY= "Successfully added valid words. If there is any invalid word , please correct it";
     public static final String INVALID_WORDS= "No valid words to add";
 

@@ -44,7 +44,7 @@ public class WordCounterController {
             throw new WordValidationException(WordCounterConstants.WORD_LIST_EMPTY_OR_NULL,HttpStatus.BAD_REQUEST); 
         }        
        
-        //Segregate valid/invalid words. Words with special characters and numbers are not allowed 
+        //Segregate valid/invalid words. Non alphabetic words are not allowed
         WordMatcherResult wordMatcherResult = WordCounterValidation.getValidAndInvalidWords(words.getWords());
       
         if(!wordMatcherResult.getValidWords().isEmpty()){
@@ -63,9 +63,13 @@ public class WordCounterController {
      * Method to get the count of passed word. It will provide count of only one word
      * @param word
      * @return
+     * @throws WordValidationException
      */
     @GetMapping (WordCounterConstants.COUNT_WORD)
-    public ResponseEntity<WordCountResponse> countWord(@PathVariable String word){
+    public ResponseEntity<WordCountResponse> countWord(@PathVariable String word) throws WordValidationException{
+        if(!WordCounterValidation.isValidWord(word)){
+            throw new WordValidationException(WordCounterConstants.INVALID_WORD,HttpStatus.BAD_REQUEST); 
+        }
         return new ResponseEntity<>(new WordCountResponse(word,wordCounterService.getWordCount(word.trim().toLowerCase())),HttpStatus.OK);
         
     }

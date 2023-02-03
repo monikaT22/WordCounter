@@ -86,10 +86,25 @@ public class WordCounterControllerTest {
         assertEquals(HttpStatus.OK,  wordResponse.getBody().getStatus());
         assertEquals(WordCounterConstants.WORDS_ADDED_SUCCESSFULLY, wordResponse.getBody().getMessage());
 
+    }  
+
+
+    @Test
+    public void test_getcount_word_validation() throws WordValidationException{
+
+        String word = "test123@";    
+
+        WordValidationException wordValidationException = assertThrows(WordValidationException.class, ()->{
+            wordCountController.countWord(word);
+        });
+
+            
+        assertEquals(HttpStatus.BAD_REQUEST, wordValidationException.getStatus());
+        assertEquals(WordCounterConstants.INVALID_WORD, wordValidationException.getMessage());
     }
 
     @Test
-    public void test_getcount_word(){
+    public void test_getcount_word() throws WordValidationException{
 
         String word = "test";
         int expectedWordCount = 1;
@@ -101,7 +116,7 @@ public class WordCounterControllerTest {
     }
     
     @Test
-    public void test_getcount_zero_if_word_not_present(){
+    public void test_getcount_zero_if_word_not_present() throws WordValidationException{
 
         String word = "test";
         int expectedWordCount = 0;
