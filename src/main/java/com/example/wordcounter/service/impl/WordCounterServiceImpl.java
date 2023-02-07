@@ -1,10 +1,10 @@
 package com.example.wordcounter.service.impl;
 
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class WordCounterServiceImpl implements WordCounterService{
     @Autowired
     private TranslatorService translatorService;
 
-    public Map<String,AtomicInteger> wordMap = Collections.synchronizedMap(new HashMap<>());  
+    public Map<String,AtomicInteger> wordMap = new ConcurrentHashMap<>();
     
 
     @Override
@@ -40,8 +40,12 @@ public class WordCounterServiceImpl implements WordCounterService{
     @Override
     public int getWordCount(String word) { 
 
-        AtomicInteger wordCount = wordMap.get(checkEnglishDictionary(word));        
-        return wordCount != null ? wordCount.get() : 0; 
+        Optional<AtomicInteger> wordCount =  wordMap.entrySet().stream()
+        .filter(entry -> entry.getKey().equals(checkEnglishDictionary(word)))
+        .map(entry -> entry.getValue()).findFirst();
+
+        return wordCount.isPresent() ? wordCount.get().get() : 0;   
+
     }    
 
     private String checkEnglishDictionary(String word){
