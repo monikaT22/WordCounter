@@ -10,7 +10,7 @@ It have following features
 ![Add Words](https://user-images.githubusercontent.com/124272753/216463082-e694948e-e549-4c6a-a9df-dac41c590dff.PNG)
 
 
-2. Count word
+2. Count word (api/word/count/{word_to_get_count}
 
 ![Count Word](https://user-images.githubusercontent.com/124272753/216463117-0c7769b6-3c7d-406b-aad5-b63ca638efea.PNG)
 
